@@ -1,59 +1,95 @@
 # apipod-cli
 
-API proxy connector for **Claude Code** (CLI) and **VSCode** (Claude Code extension).
+An agentic coding assistant for your terminal, powered by [Apipod](https://apipod.net).
 
-This tool simplifies the process of configuring your local environments to route Claude API requests through a local proxy (default: `http://localhost:8081`).
+Like Claude Code, Copilot CLI, or OpenCode — but connected to your Apipod proxy with multi-provider AI routing.
 
 ## Features
 
-- ⚡ **Connect Claude Code**: Automatically configures `~/.claude/settings.json`.
-- ⚡ **Connect VSCode**: Configures the Claude Code extension environment variables in VSCode's `settings.json`.
-- 🔑 **Token Management**: Easily update your `ANTHROPIC_API_KEY`.
-- 🔄 **Reset**: Remove proxy configurations and revert to default settings.
+- 🤖 **Full agentic coding** — reads/writes files, runs bash, searches code
+- 📡 **Streaming responses** — real-time SSE streaming from Anthropic Messages API
+- 🔧 **Client-side tools** — Bash, Read, Write, Edit, MultiEdit, Glob, Grep
+- 🔐 **Device auth login** — `apipod-cli login` opens browser for secure authentication
+- 🎯 **Smart model routing** — uses Apipod proxy for multi-provider orchestration
+- ⚡ **Single binary** — Go binary, no runtime dependencies
 
 ## Installation
 
+### From source
+
 ```bash
-# Clone the repository
-git clone <repository-url>
+go install github.com/rpay/apipod-cli/cmd/apipod-cli@latest
+```
+
+### Build locally
+
+```bash
+git clone https://github.com/rpay/apipod-cli.git
 cd apipod-cli
-
-# Install dependencies
-npm install
-
-# Link the CLI globally (optional)
-npm link
+go build -o apipod-cli ./cmd/apipod-cli/
 ```
 
-## Usage
-
-Run the CLI using:
+## Quick Start
 
 ```bash
-apipod
+# Login to your Apipod account
+apipod-cli login
+
+# Start interactive session
+apipod-cli
+
+# Or send a single prompt
+apipod-cli "explain this codebase"
+
+# Use a specific model
+apipod-cli --model claude-sonnet-4-20250514
 ```
 
-Or without linking:
+## Commands
 
-```bash
-npm start
+| Command | Description |
+|---------|-------------|
+| `apipod-cli` | Start interactive REPL |
+| `apipod-cli "prompt"` | Send a single prompt |
+| `apipod-cli login` | Authenticate via browser |
+| `apipod-cli logout` | Remove saved credentials |
+| `apipod-cli whoami` | Show current user info |
+| `apipod-cli --model MODEL` | Use a specific model |
+| `apipod-cli --help` | Show help |
+
+## Slash Commands (in interactive mode)
+
+| Command | Description |
+|---------|-------------|
+| `/help` | Show available commands |
+| `/clear` | Clear conversation history |
+| `/model [name]` | Show or change model |
+| `/compact` | Clear context |
+| `/whoami` | Show current user |
+| `/quit` | Exit |
+
+## Configuration
+
+Config is stored at `~/.apipod/config.json`:
+
+```json
+{
+  "base_url": "https://api.apipod.net",
+  "api_key": "apk_...",
+  "model": "claude-sonnet-4-20250514",
+  "username": "your-name",
+  "plan": "pro"
+}
 ```
 
-### Commands
+### Environment Variables
 
-- **Connect to Claude Code (CLI)**: Sets `ANTHROPIC_BASE_URL` to the proxy and saves your API key.
-- **Connect to VSCode**: Updates `claude-code.environmentVariables` in your VSCode user settings.
-- **Reset**: Remove proxy and API key settings from your configuration files.
-- **Change Token**: Update the API key for either or both platforms.
-
-## Configuration Paths
-
-- **Claude Code**: `~/.claude/settings.json`
-- **VSCode**:
-  - macOS: `~/Library/Application Support/Code/User/settings.json`
-  - Windows: `%APPDATA%\Code\User\settings.json`
-  - Linux: `~/.config/Code/User/settings.json`
+| Variable | Description |
+|----------|-------------|
+| `APIPOD_BASE_URL` | API base URL (overrides config) |
+| `APIPOD_API_KEY` | API key (overrides config) |
+| `APIPOD_MODEL` | Default model (overrides config) |
 
 ## License
 
-ISC
+MIT

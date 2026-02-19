@@ -1,1 +1,12 @@
+# Go
+apipod-cli
+*.exe
+dist/
+
+# Node (legacy)
 node_modules
+
+# IDE
+.idea/
+.vscode/
+*.swp

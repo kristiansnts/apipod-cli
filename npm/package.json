@@ -1,0 +1,18 @@
+{
+  "name": "apipod-cli",
+  "version": "0.1.0",
+  "description": "Agentic coding assistant for your terminal, powered by Apipod",
+  "bin": {
+    "apipod-cli": "./bin/apipod-cli"
+  },
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "keywords": ["cli", "ai", "coding-assistant", "apipod", "llm", "agentic"],
+  "author": "rpay",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rpay/apipod-cli"
+  }
+}
